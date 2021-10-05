@@ -1,9 +1,19 @@
 const User = require('../models/user');
 const crypto = require('crypto-js');
 
+const listUsers = async (req, res) => {
+  try {
+    const allUsers = await User.find({});
+    return res.send({ allUsers, status: res.statusCode });
+  } catch (e) {
+    return res.status(400).send({ error: 'Fail to show users list' });
+  }
+};
+
 const signupUser = async (req, res) => {
   try {
     const { username } = req.body;
+
     // Checks if there's an user with the same username.
     if (await User.findOne({ username })) {
       return res.status(400).send({ error: 'Username already in use' });
@@ -17,13 +27,13 @@ const signupUser = async (req, res) => {
     console.log(`Usuário ${username} cadastrado com sucesso!`);
 
     // Request checkout with status
-    return res.send({ newUser, status: 200 });
+    return res.status(201).send({ newUser, status: 201 });
   } catch (e) {
     return res.status(400).send({ error: 'Fail to register new user' });
   }
 };
 
-const userLogin = async (req, res) => {
+const loginUser = async (req, res) => {
   const { username, password } = req.body;
 
   // This will convert the request password into a WordArray, then the WordArray into the hash itself, so we can compare with the saved password.
@@ -54,15 +64,6 @@ const userLogin = async (req, res) => {
   }
 };
 
-const listUsers = async (req, res) => {
-  try {
-    const allUsers = await User.find({});
-    return res.send({ allUsers });
-  } catch (e) {
-    return res.status(400).send({ error: 'Fail to show users list' });
-  }
-};
-
 const showUser = async (req, res) => {
   try {
     const checkUser = await User.findById(req.params.userId);
@@ -72,10 +73,34 @@ const showUser = async (req, res) => {
   }
 };
 
+const deleteUser = async (req, res) => {
+  try {
+    const purgeUser = await User.findByIdAndDelete(req.params.userId);
+    return res.send({ status: 200, message: 'User successfully deleted!' });
+  } catch (e) {
+    return res.status(400).send({ error: 'Fail to delete specified User' });
+  }
+};
+
+const alterUser = async (req, res) => {
+  try {
+    const { name, username } = req.body;
+    const changeUser = await User.findByIdAndUpdate(req.params.userId, {
+      name,
+      username,
+      last_update: Date.now(),
+    });
+    return res.send({ message: 'Usuário alterado com sucesso!' });
+  } catch (e) {
+    return res.status(400).send({ error: 'Fail to alter specified User' });
+  }
+};
+
 module.exports = {
   listUsers,
   showUser,
+  alterUser,
   signupUser,
-  userLogin,
+  loginUser,
   deleteUser,
 };
