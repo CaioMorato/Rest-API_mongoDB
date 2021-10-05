@@ -17,6 +17,9 @@ const UserSchema = new mongoose.Schema(
       required: true,
       select: false,
     },
+    last_login: {
+      type: Date,
+    },
   },
   {
     versionKey: false,

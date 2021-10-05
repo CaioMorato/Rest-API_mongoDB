@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 // If you're using external database change the prefix to "+srv://".
 const databasePrefix = '://';
-// If you're using external database put the string withou the prefix here.
+// If you're using external database put the string without the prefix here.
 const databaseString = 'localhost';
 // Here goes the database name.
 const databaseName = 'users';
