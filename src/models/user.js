@@ -1,4 +1,5 @@
 const mongoose = require('../database');
+const crypto = require('crypto-js');
 
 const UserSchema = new mongoose.Schema(
   {
@@ -9,6 +10,7 @@ const UserSchema = new mongoose.Schema(
     username: {
       type: String,
       required: true,
+      unique: true,
     },
     password: {
       type: String,
@@ -24,6 +26,12 @@ const UserSchema = new mongoose.Schema(
     },
   }
 );
+
+UserSchema.pre('save', async function (next) {
+  const encryptedPass = await crypto.MD5(this.password);
+  this.password = encryptedPass;
+  next();
+});
 
 const User = mongoose.model('user', UserSchema);
 
