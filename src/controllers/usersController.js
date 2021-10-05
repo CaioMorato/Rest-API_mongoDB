@@ -6,7 +6,7 @@ const signupUser = async (req, res) => {
     const { username } = req.body;
     // Checks if there's an user with the same username.
     if (await User.findOne({ username })) {
-      return res.status(400).send({ error: 'Nome de usuário já está sendo utilizado' });
+      return res.status(400).send({ error: 'Username already in use' });
     }
 
     const newUser = await User.create(req.body);
@@ -54,4 +54,13 @@ const userLogin = async (req, res) => {
   }
 };
 
-module.exports = { signupUser, userLogin };
+const listUsers = async (req, res) => {
+  try {
+    const allUsers = await User.find({});
+    return res.send({ allUsers });
+  } catch (e) {
+    return res.status(400).send({ error: 'Fail to show users list' });
+  }
+};
+
+module.exports = { signupUser, userLogin, showAllUsers: listUsers };
