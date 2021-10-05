@@ -1,12 +1,28 @@
 const User = require('../models/user');
 const crypto = require('crypto-js');
 
+// Lists all Users
 const listUsers = async (req, res) => {
   try {
     const allUsers = await User.find({});
     return res.send({ allUsers, status: res.statusCode });
   } catch (e) {
     return res.status(400).send({ error: 'Fail to show users list' });
+  }
+};
+
+// Show specified User
+const showUser = async (req, res) => {
+  const { userInfo } = req.params;
+
+  try {
+    const checkUser = await User.findOne({
+      $or: [{ name: userInfo }, { username: userInfo }, { _id: userInfo }],
+    });
+
+    res.send({ checkUser });
+  } catch (e) {
+    return res.status(400).send({ error: 'Fail to find specified User' });
   }
 };
 
@@ -61,15 +77,6 @@ const loginUser = async (req, res) => {
     return res.send({ checkUser });
   } catch (e) {
     return res.status(400).send({ error: 'Fail to query the user' });
-  }
-};
-
-const showUser = async (req, res) => {
-  try {
-    const checkUser = await User.findById(req.params.userId);
-    res.send({ checkUser });
-  } catch (e) {
-    return res.status(400).send({ error: 'Fail to find specified User' });
   }
 };
 

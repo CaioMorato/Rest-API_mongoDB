@@ -1,8 +1,8 @@
 const express = require('express');
 const {
   listUsers,
-  alterUser,
   showUser,
+  alterUser,
   signupUser,
   loginUser,
   deleteUser,
@@ -10,8 +10,8 @@ const {
 const route = express.Router();
 
 route.get('/', listUsers);
+route.get('/user/:userInfo', showUser);
 route.put('/alter/:userId', alterUser);
-route.get('/user/:userId', showUser);
 route.post('/register', signupUser);
 route.post('/login', loginUser);
 route.delete('/delete/:userId', deleteUser);
