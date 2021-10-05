@@ -27,6 +27,7 @@ const UserSchema = new mongoose.Schema(
   }
 );
 
+// password encrypted on the database
 UserSchema.pre('save', async function (next) {
   const encryptedPass = await crypto.MD5(this.password);
   this.password = encryptedPass;
