@@ -63,4 +63,19 @@ const listUsers = async (req, res) => {
   }
 };
 
-module.exports = { signupUser, userLogin, showAllUsers: listUsers };
+const showUser = async (req, res) => {
+  try {
+    const checkUser = await User.findById(req.params.userId);
+    res.send({ checkUser });
+  } catch (e) {
+    return res.status(400).send({ error: 'Fail to find specified User' });
+  }
+};
+
+module.exports = {
+  listUsers,
+  showUser,
+  signupUser,
+  userLogin,
+  deleteUser,
+};
