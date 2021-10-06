@@ -10,10 +10,10 @@
 
 ##### Bibliotecas:
 
-* [Express](https://expressjs.com/) - Framework Node
-* [Mongoose](https://mongoosejs.com/) - Integração com MongoDB
-* [Nodemon](https://www.npmjs.com/package/nodemon) - Reinicia automaticamente o servidor quando detecta alterações
-* [CryptoJS](https://cryptojs.gitbook.io/docs/) - Criptografia das senhas salvas
+- [Express](https://expressjs.com/) - Framework Node
+- [Mongoose](https://mongoosejs.com/) - Integração com MongoDB
+- [Nodemon](https://www.npmjs.com/package/nodemon) - Reinicia automaticamente o servidor quando detecta alterações
+- [CryptoJS](https://cryptojs.gitbook.io/docs/) - Criptografia das senhas salvas
 
 ## **Sumário**
 
@@ -29,4 +29,3 @@
 Para começar a utilizar esse projeto faça o clone dando o seguinte comando em seu terminal:
 
 `git clone git@github.com:CaioMorato/mongoDB-CRUD.git`
-
