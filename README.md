@@ -1,10 +1,10 @@
 # CRUD - MongoDB
 
-#### Projeto de uma API em Node.js integrado ao MongoDB
+### Projeto de uma API em Node.js integrado ao MongoDB
 
 ---
 
-## **Visão Geral**
+## Visão Geral
 
 ##### Este projeto foi realizado utilizando 4 bibliotecas listadas abaixo, e aceita requisições em **GET**, **POST**, **PUT**, e **DELETE**
 
@@ -17,7 +17,7 @@
 
 ---
 
-# **Sumário**
+## **Sumário**
 
 - [Instalação](#instalação)
 - [Utilização](#utilização)
@@ -27,7 +27,7 @@
 
 ---
 
-# **Instalação**
+## **Instalação**
 
 ##### Para começar a utilizar esse projeto é bem simples. 
 
@@ -39,19 +39,22 @@
 
 ---
 
-# **Utilização**
+## **Utilização**
 
-#### A utilização se dá de forma simples, através de 4 principais rotas que representam as operações básicas de um banco de dados e mais algumas auxiliares.
+### A utilização se dá de forma simples, através de 4 principais rotas que representam as operações básicas de um banco de dados e mais algumas rotas auxiliares.
 
-No arquivo src/database/index.js você encontrará variáveis moduladas para que você coloque o banco de dados que estiver utilizando. A configuração padrão está definida para um banco de dados local, se este é o seu caso, não precisa fazer alterações :)
+### Vale destacar: 
+
+- No arquivo **src/database/index.js** você encontrará variáveis moduladas para que você coloque o banco de dados que estiver utilizando. **A configuração padrão está definida para um banco de dados local**, se este é o seu caso, não precisa fazer alterações :)
+- Pela **segurança do usuário**, a senha **não aparece em** nenhum momento nas requisições, e no banco de dados ela é salva com **encriptação md5**. Caso deseje visualizar as senhas nas requisições, basta comentar/deletar as linhas 107 e 16 do arquivo **src/controllers/userControllers.js**. E para retirar a encriptação basta comentar/deletar da linha 34 à linha 39. Mais à frente deste guia explicarei melhor como funciona a encriptação.
 
 ## Neste projeto temos os seguintes métodos e suas rotas:
 
 ### MÉTODO POST:
 
-- ### Rota '/create':
+- ### `Rota /create:`
 
-  Através dessa rota é possível inserir documentos no banco de dados. É necessário enviar uma requisição com um arquivo json no corpo com o seguinte formato:
+  Através dessa rota é possível **inserir documentos** no banco de dados. É necessário enviar uma requisição com um arquivo .json no corpo com o seguinte formato:
 
   ```json
   {
@@ -61,5 +64,29 @@ No arquivo src/database/index.js você encontrará variáveis moduladas para que
   }
   ```
 
-  
+  #### Algumas observações:
+
+  ##### Para a criação da senha não há nenhum critério de validação quanto a tamanho ou força.
+
+  ##### Todos estes campos devem estar preenchidos, e o **username** deverá ser único. Não seguir esses 2 critérios retornará uma resposta **400 - Bad Request**
+
+### MÉTODO GET:
+
+- ### `Rota /read/<idUsuario>`:
+
+  Através dessa rota é possível **obter** o documento, ou seja, todas **as informações de um usuário cadastrado** **passando apenas o ID** deste usuário.
+
+  A resposta se dará com o seguinte formato:
+
+  ```json
+  {
+    "newUser": {
+      "name": "John Doe",
+      "username": "johnDoe_123",
+      "_id": "615d0da71b8d7f686d380571",
+      "last_update": "2021-10-06T02:44:55.980Z"
+    },
+    "status": 201
+  }
+  ```
 
