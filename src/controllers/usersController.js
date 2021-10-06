@@ -61,35 +61,25 @@ const deleteUser = async (req, res) => {
     const findUser = await User.findById(userId);
 
     if (!findUser) {
-      return res.status(400).send({error: 'User not in the database'})
+      return res.status(400).send({ error: 'User not in the database' });
     }
 
     const purgeUser = await User.findByIdAndDelete(req.params.userId);
 
-    return res.send({ status: 200, message: 'User successfully deleted!' });
+    return res.status(204).send({ message: 'User successfully deleted!', status: res.statusCode });
   } catch (e) {
     return res.status(400).send({ error: 'Fail to delete specified User' });
   }
 };
 
-// const showUser = async (req, res) => {
-//   const { userInfo } = req.params;
-
-//   try {
-//     const checkUser = await User.findOne({
-//       $or: [{ name: userInfo }, { username: userInfo }],
-//     });
-
-//     // If not able to find name or username, will try by Id
-//     if (!checkUser) {
-//       const checkUserId = await User.findById(userInfo);
-//     }
-
-//     res.send({ checkUser });
-//   } catch (e) {
-//     return res.status(400).send({ error: 'Fail to find specified User' });
-//   }
-// };
+const showUsers = async (req, res) => {
+  try {
+    const allUsers = await User.find({});
+    res.send({ allUsers, status: 200 });
+  } catch (e) {
+    return res.status(400).send({ error: 'Fail to find specified User' });
+  }
+};
 
 // const loginUser = async (req, res) => {
 //   const { username, password } = req.body;
@@ -127,4 +117,5 @@ module.exports = {
   readUser,
   updateUser,
   deleteUser,
+  showUsers,
 };
