@@ -21,6 +21,7 @@
 
 - [Instalação](#instalação)
 - [Utilização](#utilização)
+- Tour pelos arquivos
 - Uso de cada biblioteca
 - Um pouco sobre mim
 - Próximas features
@@ -47,6 +48,7 @@
 
 - No arquivo **src/database/index.js** você encontrará variáveis moduladas para que você coloque o banco de dados que estiver utilizando. **A configuração padrão está definida para um banco de dados local**, se este é o seu caso, não precisa fazer alterações :)
 - Pela **segurança do usuário**, a senha **não aparece em** nenhum momento nas requisições, e no banco de dados ela é salva com **encriptação md5**. Caso deseje visualizar as senhas nas requisições, basta comentar/deletar as linhas 107 e 16 do arquivo **src/controllers/userControllers.js**. E para retirar a encriptação basta comentar/deletar da linha 34 à linha 39. Mais à frente deste guia explicarei melhor como funciona a encriptação.
+- O **identificador** do usuário se dá tanto pelo **_id** gerado automaticamente, como também pelo **username** que deverá ser **único**.
 
 ## Neste projeto temos os seguintes métodos e suas rotas:
 
@@ -66,9 +68,9 @@
 
   #### Algumas observações:
 
-  ##### Para a criação da senha não há nenhum critério de validação quanto a tamanho ou força.
+  - Para a criação da senha não há nenhum critério de validação quanto a tamanho ou força.
 
-  ##### Todos estes campos devem estar preenchidos, e o **username** deverá ser único. Não seguir esses 2 critérios retornará uma resposta **400 - Bad Request**
+  - Todos estes campos devem estar preenchidos, e o **username** deverá ser único. Não seguir esses 2 critérios retornará uma resposta **400 - Bad Request**
 
 ### MÉTODO GET:
 
