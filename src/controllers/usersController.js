@@ -26,11 +26,49 @@ const readUser = async (req, res) => {
   try {
     const { userId } = req.params;
 
-    const allUsers = await User.findById(userId);
+    const findUser = await User.findById(userId);
 
-    return res.send({ allUsers, status: res.statusCode });
+    return res.send({ findUser, status: res.statusCode });
   } catch (e) {
     return res.status(400).send({ error: 'Fail to show users list' });
+  }
+};
+
+const updateUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { name, username } = req.body;
+
+    const findUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        name,
+        username,
+        last_update: new Date(),
+      },
+      { new: true }
+    );
+    return res.send({ findUser, status: res.statusCode });
+  } catch (e) {
+    return res.status(400).send({ error: 'Fail to alter specified User' });
+  }
+};
+
+const deleteUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const findUser = await User.findById(userId);
+
+    if (!findUser) {
+      return res.status(400).send({error: 'User not in the database'})
+    }
+
+    const purgeUser = await User.findByIdAndDelete(req.params.userId);
+
+    return res.send({ status: 200, message: 'User successfully deleted!' });
+  } catch (e) {
+    return res.status(400).send({ error: 'Fail to delete specified User' });
   }
 };
 
@@ -84,30 +122,9 @@ const readUser = async (req, res) => {
 //   }
 // };
 
-// const deleteUser = async (req, res) => {
-//   try {
-//     const purgeUser = await User.findByIdAndDelete(req.params.userId);
-//     return res.send({ status: 200, message: 'User successfully deleted!' });
-//   } catch (e) {
-//     return res.status(400).send({ error: 'Fail to delete specified User' });
-//   }
-// };
-
-// const alterUser = async (req, res) => {
-//   try {
-//     const { name, username } = req.body;
-//     const changeUser = await User.findByIdAndUpdate(req.params.userId, {
-//       name,
-//       username,
-//       last_update: Date.now(),
-//     });
-//     return res.send({ message: 'Usuário alterado com sucesso!' });
-//   } catch (e) {
-//     return res.status(400).send({ error: 'Fail to alter specified User' });
-//   }
-// };
-
 module.exports = {
   createUser,
   readUser,
+  updateUser,
+  deleteUser,
 };
