@@ -1,6 +1,14 @@
 const express = require('express');
-const { createUser, readUser, updateUser, deleteUser, showUsers } = require('./controllers/usersController');
 const route = express.Router();
+const {
+  createUser,
+  readUser,
+  updateUser,
+  deleteUser,
+  showUsers,
+  loginUser,
+} = require('./controllers/usersController');
+
 
 // Basic CRUD routes
 route.post('/create', createUser);
@@ -10,6 +18,6 @@ route.delete('/delete/:userId', deleteUser);
 
 // Extra Routes
 route.get('/users', showUsers);
-// route.post('/login', loginUser);
+route.put('/login', loginUser);
 
 module.exports = route;

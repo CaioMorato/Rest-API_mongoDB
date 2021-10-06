@@ -8,6 +8,7 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Creates a log of every action.
 app.use((req, res, next) => {
   const { url, method } = req;
   console.log(`${method} - ${url} | ${new Date()}`);
