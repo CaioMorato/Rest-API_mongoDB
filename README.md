@@ -19,8 +19,15 @@
 
 ## **Sumário**
 
+- [Pré Requisitos](#pré-requisitos)
 - [Instalação](#instalação)
 - [Utilização](#utilização)
+- [Rotas | Endpoints](#rotas)
+  - [POST](#método post)
+  - [GET](#método get)
+  - [PUT](#método-put)
+  - [DELETE](#método delete)
+  - [Possíveis respostas/status](#possíveis respostas e status)
 - Tour pelos arquivos
 - Uso de cada biblioteca
 - Um pouco sobre mim
@@ -28,13 +35,39 @@
 
 ---
 
+## **Pré requisitos**
+
+##### Este projeto foi feito em um ambiente linux. Recomendo o uso do mesmo para utilização do projeto e o guia apresentado abaixo se dará para esse sistema.
+
+Também é necessário que o usuário tenha o banco de dados mongodb já instalado e ativo em seu computador.
+
+Para ativar o servidor basta digitar em seu terminal: 
+
+`sudo service mongod start`
+
+Para verificar se o sistema está ativo digite: 
+
+`service mongod status`
+
+A resposta deverá ser algo desse tipo:
+
+< < ( ( Imagem do status do servidor aqui )) > >
+
 ## **Instalação**
 
-##### Para começar a utilizar esse projeto é bem simples, basta instalar as dependências do projeto digitando o seguinte comando em seu terminal:
+Para começar a utilizar esse projeto é bem simples, basta instalar as dependências do projeto digitando o seguinte comando em seu terminal:
 
 ##### `npm install`
 
-##### Pra uma melhor experiencia recomendo a utilização do **[Insomnia](https://insomnia.rest/)**, ou Postman onde será possível ver e fazer as requisições de forma muito mais didática.
+Após instalar as dependências, também é necessário ligar o servidor. Para ativar o servidor digite em seu terminal:
+
+`npm start`
+
+Com isso ele mostrará que o servidor está iniciado e em qual porta.
+
+
+
+Pra uma melhor experiencia recomendo a utilização do **[Insomnia](https://insomnia.rest/)**, ou Postman onde será possível ver e fazer as requisições de forma muito mais didática.
 
 Após instalar as dependências, é só colocar na barra de URL a url para requisição + port em que está o servidor, como no exemplo abaixo:
 
@@ -52,34 +85,52 @@ Essa é a url base. Todas as rotas devem ser colocadas imediatamente após.
 
 ### Vale destacar: 
 
-- No arquivo **src/database/index.js** você encontrará variáveis moduladas para que você coloque o banco de dados que estiver utilizando. **https://i.imgur.com/f9sLs0q.png**, se este é o seu caso, não precisa fazer alterações :)
+- No arquivo **src/database/index.js** você encontrará variáveis moduladas para que você coloque o banco de dados que estiver utilizando. Por padrão, está configurado para um banco de dados local, se este é o seu caso, não precisa fazer alterações :)
 - Pela segurança do usuário, a senha não aparece nenhum momento nas requisições, e no banco de dados ela é salva com encriptação md5. Caso deseje visualizar as senhas nas requisições, basta comentar/deletar as linhas 107 e 16 do arquivo src/controllers/userControllers.js. E para retirar a encriptação basta comentar/deletar da linha 34 à linha 39. No capítulo Uso de cada biblioteca será explicado melhor sobre cada biblioteca utilizada.
-- O identificador do usuário se dá tanto pelo _id gerado automaticamente, como também pelo **https://i.imgur.com/f9sLs0q.png**, que deverão ser únicos.
+- O identificador do usuário se dá tanto pelo _id gerado automaticamente, como também pelo nome de usuário, que deverão ser únicos.
 
-## Neste projeto temos os seguintes métodos e suas rotas:
+## **Rotas** | Endpoints
 
 ### MÉTODO POST:
 
 - #### `Rota /create:`
 
-  Através dessa rota é possível inserir documentos no banco de dados. 
+  Através desse endpoint é possível inserir/cadastrar usuários no banco de dados. 
 
-  É necessário enviar uma requisição com o formato .json no corpo com o seguinte formato:
+  É necessário enviar uma requisição com o formato JSON no corpo, com o seguinte formato:
 
-  ![image-20211006174621316](https://i.imgur.com/xKhdBkE.png)
+  ```json
+  {
+  	"name": "Nome do Usuário",
+  	"username": "Nome único DE usuário",
+  	"password": "Senha para login"
+  }
+  ```
 
-  A resposta se dará mostrando uma chave com o objeto dos dados inseridos e uma chave onde será mostrado o status da requisição.
-
-  Exemplo:
-
-  ![image-20211006174737218](https://i.imgur.com/46KiGmY.png)
+  A resposta se dará em formato de objeto com 2 chaves. A primeira mostrando um checkout com os dados que foram inseridos, e a segunda informando o status da operação.
 
   
 
-  #### Algumas observações:
+  Exemplo:
 
+  ```json
+  {
+    "newUser": {
+      "name": "Elizabeth Queen",
+      "username": "queen-lizzy",
+      "_id": "6160754fb73a585a359710ff",
+      "last_update": "2021-10-08T16:43:59.168Z"
+    },
+    "status": 201
+  }
+  ```
+  
+  
+  
+  Algumas observações:
+  
   - Para a criação da senha não há nenhum critério de validação quanto a tamanho ou força.
-
+  
   - Todos estes campos devem estar preenchidos, e o username deverá ser único. Não seguir esses 2 critérios retornará uma resposta 400 - Bad Request
   
     
@@ -88,68 +139,148 @@ Essa é a url base. Todas as rotas devem ser colocadas imediatamente após.
 
 - #### `Rota /users:`
 
-  Através dessa rota é possível obter as informações de todos os usuários cadastrados.
+  Através desse endpoint é possível obter o cadastro de todos os usuários.
 
   A resposta se dará com o seguinte formato:
 
-  ![image-20211006174959875](/home/morato_dev/.var/app/io.typora.Typora/config/Typora/typora-user-images/image-20211006175016220.png)
+  ```json
+  {
+    "allUsers": [
+      {
+        "_id": "6160754fb73a585a359710ff",
+        "name": "Elizabeth Queen",
+        "username": "queen-lizzy",
+        "last_update": "2021-10-08T16:43:59.168Z"
+      },
+      {
+        "_id": "616075edb73a585a35971106",
+        "name": "John Doe",
+        "username": "john",
+        "last_update": "2021-10-08T16:46:37.783Z"
+      }
+        ...
+    ],
+    "status": 200
+  }
+  ```
 
   
 
 - #### `Rota /read/<idUsuario>`
 
-  Através dessa rota é possível obter o documento, ou seja, todas as informações de um usuário cadastrado passando apenas o ID deste usuário.
+  Através desse endpoint é possível obter o cadastro, de um usuário específico passando o _id do usuário na rota.
 
-  Exemplo:
+  Exemplo de rota:
 
-  `http://localhost:3000/read/615d0da71b8d7f686d380571`
+  `http://localhost:3000/read/616075edb73a585a35971106`
 
   A resposta se dará com o seguinte formato:
 
-  ![image-20211006174920810](https://i.imgur.com/f9sLs0q.png)
-
+  ```json
+  {
+    "findUser": {
+      "_id": "616075edb73a585a35971106",
+      "name": "John Doe",
+      "username": "john",
+      "last_update": "2021-10-08T16:46:37.783Z"
+    },
+    "status": 200
+  }
+  ```
   
-
   
 
 ### MÉTODO PUT:
 
 - #### `Rota /update/<idUsuario>`
 
-  Através dessa rota é possível atualizar os dados de um usuário, passando na rota o _id desse usuário. É necessário enviar uma requisição com o formato .json no corpo com o seguinte formato:
+  Através desse endpoint é possível atualizar o cadastro de um usuário específico, passando o _id do usuário na rota. 
 
-  ![image-20211006181410700](https://i.imgur.com/ru3apRe.png)
+  É necessário enviar uma requisição com o formato JSON no corpo, com o seguinte formato:
+
+  ```json
+  {
+  	"name": "Marcelo D2",
+  	"username": "marcelod2"
+  }
+  ```
 
   A resposta se dará mostrando os dados atualizados do usuário e o status da requisição, com o seguinte formato:
 
-  ![image-20211006181643218](https://i.imgur.com/k4b7B1w.png)
+  ```json
+  {
+    "findUser": {
+      "_id": "616075edb73a585a35971106",
+      "name": "Marcelo D2",
+      "username": "marcelod2",
+      "last_update": "2021-10-08T17:36:44.640Z"
+    },
+    "status": 200
+  }
+  ```
+
+  
 
 - #### `Rota /login`
 
-  Através dessa rota é possível simular o login de um usuário. É necessário enviar uma requisição com o formato .json no corpo com o seguinte formato: 
+  Através desse endpoint é possível simular o login de um usuário. 
 
-  ​													![image-20211006184318692](https://i.imgur.com/4gwJCnM.png)	
+  É necessário enviar uma requisição com o formato .json no corpo com o seguinte formato: 
 
+  ```json
+  {
+  	"username": "queen-lizzy",
+  	"password": "1234"
+  }
+  ```
+  
+  
+  
   A resposta se dará mostrando uma mensagem de sucesso ou de erro, e o status da requisição, com o seguinte formato:
-
-  ![image-20211006185119206](https://i.imgur.com/HGiOudZ.png)
-
+  
+  ```json
+  {
+    "message": "You successfully logged in!",
+    "status": 200
+  }
+  ```
+  
+  
+  
+  Algumas observações:
+  
+  - Quando o usuário é criado, não existe o campo last_login, mas ao utilizar esse endpoint, o campo aparece e o valor dele é o horário em que a rota foi acessada.
   
 
 ### MÉTODO DELETE:
 
 - #### `Rota /delete/<idUsuario>`
 
-  Através dessa rota é possível deletar cadastro de um usuário, do banco de dados, passando apenas o ID deste usuário.
+  Através desse endpoint é possível deletar cadastro de um um usuário, passando o _id do usuário na rota. 
 
-  Exemplo:
+  Exemplo de rota:
 
-  `http://localhost:3000/read/615d0da71b8d7f686d380571`
+  `http://localhost:3000/read/616075edb73a585a35971106`
 
   
 
   A resposta se dará mostrando uma mensagem de sucesso ou de erro, e o status da requisição, com o seguinte formato:
 
-  ![image-20211006185328829](https://i.imgur.com/4WWIIOF.png)
+  ```json
+  {
+    "message": "User successfully deleted!",
+    "status": 200
+  }
+  ```
 
-  
+## **Possíveis respostas e status**
+
+### Sucesso:
+
+**200 (OK) -** Significa que está tudo OK e a requisição foi bem sucedida.
+
+**204 (No Content) -** Normalmente esse é o status utilizado para métodos PUT e DELETE. Nesse status não é mostrado nenhum retorno, mesmo sendo uma requisição bem sucedida. Nesse projeto estamos usando o 200 para poder passar informação no retorno.
+
+### Erros:
+
+**400 (Bad Request) -** Significa que algo na solicitação está errado. Pode ser a extensão do envio da requisição, algum erro na rota ou algum dado errado ao enviar requisições.
