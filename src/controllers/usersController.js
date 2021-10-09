@@ -28,9 +28,13 @@ const readUser = async (req, res) => {
 
     const findUser = await User.findById(userId);
 
+    if (!findUser) {
+      return res.status(400).send({ message: 'User not found, check de _id', status: res.status });
+    }
+
     return res.send({ findUser, status: res.statusCode });
   } catch (e) {
-    return res.status(400).send({ error: 'Fail to show users list' });
+    return res.status(400).send({ error: 'Fail to find specified User' });
   }
 };
 
