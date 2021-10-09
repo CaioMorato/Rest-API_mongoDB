@@ -30,8 +30,7 @@
   - [Possíveis respostas/status](#possíveis-respostas-e-status)
 - [Tour pelos arquivos](#tour-pelos-arquivos)
 - [Uso de cada biblioteca](#uso-de-cada-biblioteca)
-- Um pouco sobre mim
-- Próximas features
+- [Sobre o autor](#sobre-o-autor)
 
 ---
 
@@ -51,7 +50,7 @@ Para verificar se o sistema está ativo digite:
 
 A resposta deverá ser algo desse tipo:
 
-< < ( ( Imagem do status do servidor aqui )) > >
+![image-20211008172353306](https://i.imgur.com/oJM8qaO.png)
 
 ---
 
@@ -63,7 +62,7 @@ Para começar a utilizar esse projeto é bem simples, basta instalar as dependê
 
 Após instalar as dependências, também é necessário ligar o servidor. Para ativar o servidor digite em seu terminal:
 
-`npm start`
+##### `npm start`
 
 Com isso ele mostrará que o servidor está iniciado e em qual porta.
 
@@ -89,7 +88,7 @@ Essa é a url base. Todas as rotas devem ser colocadas imediatamente após.
 
 - No arquivo **src/database/index.js** você encontrará variáveis moduladas para que você coloque o banco de dados que estiver utilizando. Por padrão, está configurado para um banco de dados local, se este é o seu caso, não precisa fazer alterações :)
 - Pela segurança do usuário, a senha não aparece nenhum momento nas requisições, e no banco de dados ela é salva com encriptação md5. Caso deseje visualizar as senhas nas requisições, basta comentar/deletar as linhas 107 e 16 do arquivo src/controllers/userControllers.js. E para retirar a encriptação basta comentar/deletar da linha 34 à linha 39. No capítulo Uso de cada biblioteca será explicado melhor sobre cada biblioteca utilizada.
-- O identificador do usuário se dá tanto pelo _id gerado automaticamente, como também pelo nome de usuário, que deverão ser únicos.
+- O identificador do usuário se dá tanto pelo **_id** gerado automaticamente, como também pelo nome de usuário, que deverão ser únicos.
 
 ---
 
@@ -326,13 +325,13 @@ Todos os arquivos utilizados ficam dentro de uma pasta `src/`. Dentro dela exist
 
   Esse é o arquivo onde está configurado o acesso ao banco de dados. 
 
-  Na constante databasePrefix ficará a informação de prefixo do banco de dados. Por padrão todas as informações desse arquivo estão configuradas para servir um banco de dados local. Caso seja um banco de dados externo, normalmente a 'string' de acesso começa com +srv:// então é só trocar nessa constante.
+  Na constante **databasePrefix** ficará a informação de prefixo do banco de dados. Por padrão todas as informações desse arquivo estão configuradas para servir um banco de dados local. Caso seja um banco de dados externo, normalmente a 'string' de acesso começa com +srv:// então é só trocar nessa constante.
 
-  A constante databaseString armazena justamente a 'string' de acesso do banco de dados.
+  A constante **databaseString** armazena justamente a 'string' de acesso do banco de dados.
 
-  A constante databaseName armazenará o nome do banco de dados, e caso não exista nenhum banco de dados com esse nome, será criado. Por padrão o nome é users.
+  A constante **databaseName** armazenará o nome do banco de dados, e caso não exista nenhum banco de dados com esse nome, será criado. Por padrão o nome é users.
 
-  A função connect do mongoose juntará todas essas informações e dará o acesso ao banco de dados.
+  A **função connect** do mongoose juntará todas essas informações e dará o acesso ao banco de dados.
 
 - **src/models/user.js**
 
@@ -363,3 +362,16 @@ Aqui vou falar um pouco sobre o uso de cada biblioteca utilizada. Mesmo sendo po
 - **CryptoJS**
 
   É uma biblioteca com padrões de criptografia diferentes. É muito bacana trabalhar com ela e nesse projeto ela serviu pra criptografar a senha do usuário pra salvar no banco de dados.
+
+---
+
+## **Sobre o autor**
+
+Olá! Que bom que chegou até aqui!
+
+Eu me chamo Caio e sou estudante de desenvolvimento Web, comecei meus estudos no ano de 2021 e estou me apaixonando cada dia que passa, através dos estudos, por educação e tecnologia. Esse projeto e esse README foram desenvolvidos como um desafio técnico e empenhei muito carinho na construção de cada linha.
+
+[Você pode olhar mais dos meus repositórios aqui](https://github.com/CaioMorato)
+
+[Ou se conectar comigo no linkedin!](https://www.linkedin.com/in/morato-dev/)
+

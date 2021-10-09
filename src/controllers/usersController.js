@@ -39,16 +39,24 @@ const updateUser = async (req, res) => {
     const { userId } = req.params;
     const { name, username } = req.body;
 
-    const findUser = await User.findByIdAndUpdate(
-      userId,
+    const changeUser = await User.findById(userId);
+
+    if (!changeUser) {
+      return res.status(400).send({ error: 'Unable to update. User not found' });
+    }
+
+    const update = await User.findOneAndUpdate(
+      {
+        _id: userId,
+      },
       {
         name,
         username,
-        last_update: new Date(),
       },
       { new: true }
     );
-    return res.send({ findUser, status: res.statusCode });
+
+    return res.send({ update, status: res.statusCode });
   } catch (e) {
     return res.status(400).send({ error: 'Fail to alter specified User' });
   }
