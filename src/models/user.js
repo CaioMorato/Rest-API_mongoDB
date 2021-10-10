@@ -22,6 +22,7 @@ const UserSchema = new mongoose.Schema(
     },
   },
   {
+    // Removes the field "__v" which controls how many updates the document had
     versionKey: false,
     timestamps: {
       createdAt: false,
@@ -30,7 +31,7 @@ const UserSchema = new mongoose.Schema(
   }
 );
 
-// password encrypted on the database
+// On the database it will show an encrypted password
 UserSchema.pre('save', async function (next) {
   const encryptedPass = await crypto.MD5(this.password);
   this.password = encryptedPass;
@@ -38,6 +39,7 @@ UserSchema.pre('save', async function (next) {
   next();
 });
 
+// The collection will be saved under the 'user' name
 const User = mongoose.model('user', UserSchema);
 
 module.exports = User;

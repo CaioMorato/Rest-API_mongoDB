@@ -2,6 +2,8 @@ const express = require('express');
 const routes = require('./routes');
 
 const app = express();
+
+// If you want to change the PORT create .env. Otherwise it will be 3000
 const port = process.env.PORT || 3000;
 
 // This will parse the json and url encoded on the requests.
