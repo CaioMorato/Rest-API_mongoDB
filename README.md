@@ -1,4 +1,4 @@
-# CRUD - MongoDB
+# Rest API mongoDB
 
 ### Projeto de uma API em Node.js integrada ao MongoDB
 
